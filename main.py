@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -23,11 +23,20 @@ async def country(country_name: str = "japan", country_no: Optional[int] = None)
     "country_no": country_no
   }
 
+class ShopInfo(BaseModel):
+  name: str
+  location: str
+
+
 class Item(BaseModel):
   name: str
   description: Optional[str] = None
   price: int
   tax: Optional[float] = None
+
+class Data(BaseModel):
+  shop_info: Optional[ShopInfo]
+  items: List[Item]
 
 """
 sample item
@@ -42,3 +51,7 @@ sample item
 @app.post("/item")
 async def create_item(item: Item):
   return {"message": f"{item.name}は、税込価格{int(item.price*(1 + item.tax))}円です。"}
+
+@app.post("/shop")
+async def create_shop(data: Data):
+  return {"data": data}
