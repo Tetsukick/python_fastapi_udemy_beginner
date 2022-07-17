@@ -16,3 +16,10 @@ async def country():
 @app.get("/countries/{country_name}")
 async def country(country_name: str):
   return {"country_name": country_name}
+
+@app.get("/countries")
+async def country(country_name: str = "japan", country_no: int = 1):
+  return {
+    "country_name": country_name,
+    "country_no": country_no
+  }
