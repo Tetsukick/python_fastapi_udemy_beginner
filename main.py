@@ -14,8 +14,8 @@ async def country():
   return {"message": "this is japan!"}
 
 @app.get("/countries/{country_name}")
-async def country(country_name: str):
-  return {"country_name": country_name}
+async def country(country_name: str = "japan", city_name: str = "tokyo"):
+  return {"country_name": country_name, "city_name": city_name}
 
 @app.get("/countries")
 async def country(country_name: str = "japan", country_no: int = 1):
